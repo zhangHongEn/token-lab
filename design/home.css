@@ -1,0 +1,48 @@
+/* Homepage only: original surfaces with the compact comparison table. */
+.restored-home{position:relative;isolation:isolate;min-height:100dvh;background:#fafbfc;color:#171b27}
+.restored-home .field{margin-bottom:0}
+.restored-home .input-unit{display:inline;position:static;width:auto;flex:none}
+.restored-home .field>span:first-child{display:initial}
+.restored-home .section-heading{margin-bottom:0}
+.restored-home .segmented{border:0}
+.restored-home .pagination{margin-top:0}
+.restored-home .comparison-table-wrap{border:1px solid #e4e7ed;border-radius:16px;background:#fffffff5;box-shadow:0 5px 24px #18203904;margin-bottom:24px}
+.restored-home .comparison-table{font-size:13px;white-space:nowrap;text-align:left}
+.restored-home .comparison-table th{height:40px;padding:0 15px;text-align:left;background:#fafbfc;color:#858c99;font-size:11px;font-weight:400;border-bottom:1px solid #e9ebef}
+.restored-home .comparison-table th:first-child{border-radius:16px 0 0 0}
+.restored-home .comparison-table th:last-child{border-radius:0 16px 0 0}
+.restored-home .comparison-table td{padding:19px 15px;text-align:left;color:#303848;font-size:13px;border-bottom:1px solid #eceef2}
+.restored-home .comparison-table tr:last-child td{border-bottom:0}
+.restored-home .comparison-table .plan-identity{display:flex;align-items:center;gap:12px;min-width:200px;margin:0}
+.restored-home .comparison-table .plan-icon{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;background:#f1f5f1;border:1px solid #e8ede8}
+.restored-home .comparison-table .plan-title{padding:0;min-height:0;border:0;background:none;font-size:14px;font-weight:550;color:#293140;box-shadow:none;border-radius:0}
+.restored-home .comparison-table .plan-title:hover{background:none;text-decoration:underline}
+.restored-home .comparison-table .plan-identity small{font-size:11px;color:#9299a6;margin-top:5px}
+.restored-home .comparison-table .price-cell{font-size:22px;font-weight:550;letter-spacing:-.6px;color:#252c39}
+.restored-home .comparison-table .price-cell .micro{font-size:9px;font-weight:400;letter-spacing:0;color:#8d95a0;margin-left:7px}
+.restored-home .comparison-table .badge{font-size:9px;color:#818a78;border:1px solid #dde3d6;background:#f3f5ef;border-radius:4px;padding:2px 5px;margin-left:8px}
+.restored-home .comparison-table .delta{display:inline-flex;align-items:center;gap:3px;padding:4px 6px;border-radius:4px;background:#edf5e9;color:#4c7656;font-size:11px;font-weight:500}
+.restored-home .comparison-table .delta.positive{color:#9b7850;background:#faf2e8}
+.restored-home .comparison-table .unit{font-size:10px;color:#9198a4;margin-left:4px}
+.restored-home .comparison-table .plan-actions-cell{width:1%;white-space:nowrap}
+.restored-home .comparison-table .row-actions{display:flex;align-items:center;justify-content:flex-end;gap:16px}
+.restored-home .comparison-table .plan-action-link{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:32px;padding:4px 0;border:0;border-radius:3px;background:transparent;box-shadow:none;color:var(--accent);font-size:12px;white-space:nowrap}
+.restored-home .comparison-table .plan-action-link:hover,.restored-home .comparison-table .plan-action-link.is-open{color:#883d28;background:transparent}
+.restored-home .comparison-table .plan-action-link:hover{text-decoration:underline;text-underline-offset:4px}
+.restored-home .plan-menu-anchor{position:relative}
+.restored-home .plan-menu-trigger svg{transition:transform .15s}
+.restored-home .plan-menu-trigger.is-open svg{transform:rotate(180deg)}
+.restored-home .plan-action-menu{position:absolute;right:0;top:calc(100% + 5px);z-index:20;display:flex;flex-direction:column;align-items:stretch;width:156px;padding:5px;border:1px solid #e4e7ed;border-radius:8px;background:#fff;box-shadow:0 8px 28px #18203914;white-space:nowrap}
+.restored-home .comparison-table .plan-action-menu button{display:flex;align-items:center;justify-content:flex-start;flex:none;gap:9px;width:100%;min-height:34px;padding:8px 10px;border:0;border-radius:4px;background:transparent;box-shadow:none;color:#555e6e;font-size:12px;text-align:left}
+.restored-home .comparison-table .plan-action-menu button:hover:not(:disabled),.restored-home .comparison-table .plan-action-menu button:focus-visible{background:#f5f6f8}
+.restored-home .plan-menu-divider{height:1px;margin:4px 5px;background:#eceef2}
+.restored-home .comparison-table .plan-action-menu .plan-menu-danger{color:#b3483d}
+.restored-home .comparison-table .plan-action-menu .plan-menu-danger:hover,.restored-home .comparison-table .plan-action-menu .plan-menu-danger:focus-visible{background:#fdf1ef}
+.restored-home .comparison-table-wrap .empty-state{border:0;margin:0;padding:50px 15px}
+.restored-home .undo-button{font-size:11px;min-height:28px;padding:5px 9px;white-space:nowrap;background:transparent;border-color:transparent;margin-left:auto}
+@media(max-width:1150px){.restored-home .comparison-table td,.restored-home .comparison-table th{padding-left:12px;padding-right:12px}.restored-home .comparison-table .plan-identity{min-width:180px}}
+@media(max-width:850px){.restored-home .comparison-table .price-cell{font-size:19px}}
+@media(max-width:600px){.restored-home .comparison-table td,.restored-home .comparison-table th{padding:15px 10px}.restored-home .comparison-table td:nth-child(3),.restored-home .comparison-table th:nth-child(3),.restored-home .comparison-table td:nth-child(4),.restored-home .comparison-table th:nth-child(4),.restored-home .comparison-table td:nth-child(5),.restored-home .comparison-table th:nth-child(5){display:none}.restored-home .comparison-table .plan-identity{min-width:0;gap:8px}.restored-home .comparison-table .plan-icon{width:28px;height:31px}.restored-home .comparison-table .plan-title{font-size:12px}.restored-home .comparison-table .plan-identity small{font-size:9px}.restored-home .comparison-table .price-cell{font-size:19px}.restored-home .comparison-table .price-cell .micro{display:none}.restored-home .comparison-table .row-actions{gap:12px}.restored-home .comparison-table .plan-action-link{font-size:11px}.restored-home footer{flex-wrap:wrap}.restored-home .undo-button{margin-left:0}}
+
+.restored-home .comparison-cards{margin-bottom:24px}
+.restored-home .single-plan-note{margin-top:0}

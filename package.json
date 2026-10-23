@@ -1,0 +1,35 @@
+{
+  "name": "token-lab",
+  "version": "1.0.0",
+  "description": "A browser-based simulator for Agent token usage, caching, compression, and cost.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhangHongEn/token-lab.git"
+  },
+  "homepage": "https://github.com/zhangHongEn/token-lab#readme",
+  "bugs": {
+    "url": "https://github.com/zhangHongEn/token-lab/issues"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "packageManager": "npm@10.9.4",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test src/*.test.js"
+  },
+  "dependencies": {
+    "acorn": "^8.19.0",
+    "echarts": "^6.1.0",
+    "lucide-vue-next": "^0.468.0",
+    "vue": "^3.5.22"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "vite": "^7.1.7"
+  }
+}

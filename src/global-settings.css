@@ -1,0 +1,22 @@
+/* Keep all global controls on one row, including the model selector. */
+.global-settings-fields,
+.restored-home .global-settings-fields {
+  grid-template-columns: minmax(220px, 2.2fr) repeat(3, minmax(80px, 1fr)) minmax(112px, 1.2fr) minmax(138px, 1.4fr) minmax(80px, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+.global-settings-fields > .field { min-width: 0; }
+.global-settings-fields > .field > span:first-child,
+.restored-home .global-settings-fields > .field > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  line-height: 18px;
+  white-space: nowrap;
+}
+.global-settings-fields select { min-width: 0; width: 100%; text-overflow: ellipsis; }
+.global-settings .field-hint .field-hint-tooltip { top: auto; bottom: calc(100% + 6px); }
+@media (max-width: 1100px) {
+  .global-settings,
+  .restored-home .global-settings { overflow-x: auto; }
+}

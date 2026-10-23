@@ -1,0 +1,46 @@
+/* Shadows follow the painted glyphs and icons, never the element's box. */
+.app-header .header-floating {
+  filter:
+    drop-shadow(0 0 2px rgb(250 251 252 / var(--header-surface-opacity, 0)))
+    drop-shadow(0 0 4px rgb(250 251 252 / var(--header-surface-opacity, 0)))
+    drop-shadow(0 0 7px rgb(250 251 252 / var(--header-surface-opacity, 0)))
+    drop-shadow(0 1px 2px rgb(24 32 57 / calc(var(--header-surface-opacity, 0) * 0.14)));
+}
+
+.app-header .brand-title {
+  display: inline-block;
+  font: inherit;
+}
+
+.app-header .brand-tagline {
+  width: max-content;
+}
+
+.app-header .header-actions button.header-floating {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.app-header .header-actions .header-github {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 10px 15px;
+  font-size: 12px;
+  color: #555e6e;
+  border-radius: 8px;
+}
+
+.app-header .header-actions .header-github:hover { color: var(--accent); }
+
+@media (max-width: 700px) {
+  .app-header .header-actions .header-github { padding: 8px; }
+}
+
+@media (max-width: 480px) {
+  .app-header .header-actions .header-github { width: 34px; }
+  .app-header .header-github span { display: none; }
+}

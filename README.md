@@ -80,21 +80,108 @@ turn：追加用户消息 → 模型生成计划 → 追加工具结果 → 模�
 进入下一轮，直到完成设定轮次
 ```
 
-每个步骤只需描述名称、类型和 Token 长度。更多参数、缓存匹配规则和压缩细节，见 [会话模拟与配置参考](docs/simulation.md)。
+每个步骤只需描述名称、类型和 Token 长度。下面是一段可在项目根目录通过 Node.js ES Module 运行的示例：
+
+```js
+import Session from "./src/session.js";
+
+const session = new Session({
+  turnTotalCount: 10,
+  expectedPrefixCacheHitRate: 0.9,
+  // 示例单价，单位：美元 / 百万 Token；请替换为所用模型的费率。
+  model: {
+    inputCachedPrice: 1.5,
+    inputNotCachedPrice: 12,
+    outputPrice: 36,
+  },
+  flow: {
+    initial: [
+      { type: "action", text: "系统提示", token: 2 },
+      { type: "action", text: "业务背景", token: 1 },
+    ],
+    turn: [
+      { type: "action", text: "用户提问", token: 0.1 },
+      { type: "llm", text: "检索计划", token: 0.2 },
+      { type: "action", text: "检索结果", token: 3 },
+      { type: "llm", text: "最终回复", token: 1 },
+    ],
+  },
+});
+
+session.reset();
+const totals = session.getConsumptionTokens();
+console.log("预计会话费用：", totals.totalPrice);
+```
+
+- `action`：向上下文追加内容，例如系统提示、用户消息或工具返回。
+- `llm`：以当前有效上下文作为输入，生成指定长度的输出，并追加到上下文。
+- `token`：以 **K Token** 为单位；`1` 表示 1,000 Token。支持固定数字或公式字符串，例如 `"Math.ceil(toolResultToken * turnAvgToolsCount)"`。点击「插入变量」可搜索变量、查看说明和预览值，并插入到光标处。公式还可使用从 0 开始的用户轮次 `turnIndex` 和本轮模型调用索引 `llmIndex`，例如 `"agentResult * (turnIndex + 1)"`。
+- `enabled: false`：跳过步骤，方便比较删减某一步后的效果。
+
+初始阶段支持 `action`，每轮阶段支持 `action` 和 `llm`。流程是纯 JSON 数据，可在页面、配置文件和 Worker 之间传递。
+
+更多参数、缓存匹配规则和压缩细节，见 [会话模拟与配置参考](docs/simulation.md)。
+
+## 如何理解结果
+
+```text
+请求费用 = 命中输入 K ÷ 1,000 × 命中输入单价
+         + 未命中输入 K ÷ 1,000 × 未命中输入单价
+         + 模型输出 K ÷ 1,000 × 输出单价
+
+会话总费用 = 所有普通请求费用 + 所有压缩请求费用
+```
+
+- **上下文会累积**：后续调用会重新读取当前有效上下文，一段内容可能产生多次输入费用。
+- **缓存按前缀匹配**：引擎按动作引用匹配输入前缀，再应用配置的期望命中率；首次请求的初始上下文也按该期望值估算。
+- **压缩本身也收费**：每轮流程结束后检查阈值，压缩请求的输入和摘要输出均计入总费用，包括最后一轮触发的压缩。
+- **对比口径要一致**：所有方案统一以美元（$）比较；轮次数不同，比较的是各自完整会话的总费用。
+- **模型费率是快照**：内置费率不会联网更新。全局配置仅选择模型并自动使用内置费率；方案切换为独立模型后可手动调整单价。模拟器不会对真实文本进行分词计数。
+- **统一美元费率**：全部模型费率直接以 USD 维护，数值按美元计价。新增 OpenAI GPT、Anthropic Claude、Google Gemini 官方美元报价（2026-10-21 核对）；分档、优惠截止时间和未计入的缓存附加费用会在模型与费率面板说明。
 
 ## 本地验证与构建
 
 ```sh
+# 运行计算、流程、配置迁移与多方案测试
 npm test
+
+# 构建静态页面（只生成 dist，不上传任何服务）
 npm run build
+
+# 预览构建产物
 npm run preview
 ```
 
-`npm run build` 只生成可部署的静态文件到 `dist/`，不会上传 CDN，也不会访问公司内部服务。GitHub Actions 会在每次提交和 Pull Request 中自动运行测试与构建。
+`npm run build` 只生成可部署的静态文件到 `dist/`，不会上传 CDN，也不会访问公司内部服务。部署请使用你自己的静态托管平台或 CI 流程。
+
+GitHub Actions 会在每次提交和 Pull Request 中自动运行 `npm test` 与 `npm run build`。
+
+## 项目结构
+
+```text
+src/
+├── session.js             # 通用流程执行、缓存、压缩与计费
+├── session-defaults.js    # 默认会话参数
+├── session-flow.js        # 流程模板、Token 参数与步骤校验
+├── token-formula.js       # JS 数值表达式解析与受限求值
+├── session-report.js      # 请求记录、费用归因与会话汇总
+├── session.worker.js      # 在 Worker 中执行模拟
+├── comparison.js          # 独立方案、对比基准与配置校验
+├── config.js              # 参数表单定义与配置读取
+├── legacy-config.js       # 旧配置转换为独立流程
+├── model-pricing.js       # 内置模型费率快照
+├── components/            # 参数、流程、概览与分析界面
+├── charts.js              # 费用来源与会话趋势图
+├── export.js              # CSV 导出
+└── App.vue                # 页面状态与方案管理
+```
+
+配置采用 v4 格式，导入时兼容 v2 / v3；旧模式条件会被转换成实际流程步骤。完整格式见 [配置参考](docs/simulation.md)。
 
 ## 参与改进
 
 欢迎讨论新的流程模板、费用展示方式和模拟边界，也欢迎提交修复。
 
-修改计算逻辑后运行 `npm test`，修改界面后再检查 `npm run build`。
+反馈计算问题时，请附上可复现的配置、预期结果与实际结果；分享前移除不希望公开的方案名称和自定义内容。更新模型费率时，请注明价格来源、币种、适用档位和核对日期。
 
+修改计算逻辑后运行 `npm test`，修改界面后再检查 `npx vite build`，并确认相关交互正常。
